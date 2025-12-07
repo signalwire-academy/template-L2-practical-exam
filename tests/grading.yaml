@@ -1,0 +1,53 @@
+# Grading configuration for practical exam
+
+assignment:
+  id: "L2-practical"
+  name: "Level 2: Professional Practical Exam"
+  level: 2
+  type: "practical-exam"
+  passing_score: 70
+
+checks:
+  - id: instantiate
+    name: "Agent Instantiation"
+    points: 15
+    type: instantiate
+    file: solution/agent.py
+  - id: swml_valid
+    name: "SWML Generation"
+    points: 15
+    type: swml_valid
+    file: solution/agent.py
+  - id: has_contexts
+    name: "Uses contexts"
+    points: 15
+    type: swml_contains
+    file: solution/agent.py
+    require:
+      - text: "context"
+  - id: has_datamap
+    name: "Uses DataMap"
+    points: 15
+    type: swml_contains
+    file: solution/agent.py
+    require:
+      - text: "data_map"
+  - id: has_skills
+    name: "Uses skills"
+    points: 15
+    type: swml_contains
+    file: solution/agent.py
+    require:
+      - text: "skill"
+  - id: func_count
+    name: "Has 3+ functions"
+    points: 25
+    type: function_exists
+    file: solution/agent.py
+    function: get_
+
+feedback:
+  pass: |
+    Congratulations! You've passed the Level 2 Practical Exam!
+  fail: |
+    Some requirements weren't met. Review the feedback and try again.
