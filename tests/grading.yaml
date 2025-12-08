@@ -1,53 +1,142 @@
-# Grading configuration for practical exam
+# Grading configuration for Level 2 Practical Exam
+# Scenario: TechSupport Pro - Multi-Context Customer Service System
 
 assignment:
   id: "L2-practical"
-  name: "Level 2: Professional Practical Exam"
+  name: "Level 2 Practical: Certified Agent Engineer"
   level: 2
   type: "practical-exam"
   passing_score: 70
 
 checks:
+  # Part 1: Agent Structure (20 points)
   - id: instantiate
-    name: "Agent Instantiation"
-    points: 15
+    name: "Agent loads without errors"
+    points: 10
     type: instantiate
-    file: solution/agent.py
+    file: solution/techsupport_agent.py
+
   - id: swml_valid
-    name: "SWML Generation"
-    points: 15
+    name: "Generates valid SWML"
+    points: 10
     type: swml_valid
-    file: solution/agent.py
+    file: solution/techsupport_agent.py
+
+  # Part 2: Customer Identification (15 points)
+  - id: func_identify
+    name: "identify_customer function exists"
+    points: 5
+    type: function_exists
+    file: solution/techsupport_agent.py
+    function: identify_customer
+
+  - id: exec_identify_valid
+    name: "identify_customer finds known customer"
+    points: 10
+    type: exec
+    file: solution/techsupport_agent.py
+    function: identify_customer
+    args:
+      identifier: "john@example.com"
+    expect:
+      stdout_contains:
+        - "John"
+
+  # Part 3: Multi-Context Workflow (20 points)
   - id: has_contexts
-    name: "Uses contexts"
-    points: 15
+    name: "Has contexts defined"
+    points: 10
     type: swml_contains
-    file: solution/agent.py
+    file: solution/techsupport_agent.py
     require:
       - text: "context"
-  - id: has_datamap
-    name: "Uses DataMap"
-    points: 15
-    type: swml_contains
-    file: solution/agent.py
-    require:
-      - text: "data_map"
-  - id: has_skills
-    name: "Uses skills"
-    points: 15
-    type: swml_contains
-    file: solution/agent.py
-    require:
-      - text: "skill"
-  - id: func_count
-    name: "Has 3+ functions"
-    points: 25
+
+  - id: func_describe_issue
+    name: "describe_issue function exists"
+    points: 5
     type: function_exists
-    file: solution/agent.py
-    function: get_
+    file: solution/techsupport_agent.py
+    function: describe_issue
+
+  - id: func_create_ticket
+    name: "create_ticket function exists"
+    points: 5
+    type: function_exists
+    file: solution/techsupport_agent.py
+    function: create_ticket
+
+  # Part 4: Issue Handling Functions (20 points)
+  - id: func_resolve
+    name: "resolve_ticket function exists"
+    points: 5
+    type: function_exists
+    file: solution/techsupport_agent.py
+    function: resolve_ticket
+
+  - id: func_escalate
+    name: "escalate_ticket function exists"
+    points: 5
+    type: function_exists
+    file: solution/techsupport_agent.py
+    function: escalate_ticket
+
+  - id: exec_create_ticket
+    name: "create_ticket returns ticket ID"
+    points: 5
+    type: exec
+    file: solution/techsupport_agent.py
+    function: create_ticket
+    args:
+      priority: "high"
+    expect:
+      stdout_contains:
+        - "ticket"
+
+  - id: has_transfer
+    name: "Has transfer capability for escalation"
+    points: 5
+    type: swml_contains
+    file: solution/techsupport_agent.py
+    require:
+      - text: "transfer"
+
+  # Part 5: Recording Compliance (10 points)
+  - id: has_recording
+    name: "Recording configured"
+    points: 5
+    type: swml_contains
+    file: solution/techsupport_agent.py
+    require:
+      - text: "record"
+
+  - id: func_secure_mode
+    name: "secure_mode function exists"
+    points: 5
+    type: function_exists
+    file: solution/techsupport_agent.py
+    function: secure_mode
+
+  # Part 6: Deployment Configuration (5 points) - Verified manually
+  # Dockerfile, requirements.txt, .env.example
 
 feedback:
   pass: |
-    Congratulations! You've passed the Level 2 Practical Exam!
+    Congratulations! Your agent passed the automated checks.
+
+    Your submission will now be reviewed by an instructor for:
+    - Code quality and architecture decisions
+    - Context workflow implementation
+    - Deployment configuration
+    - Live demonstration
+
+    You will receive final results after manual review.
   fail: |
-    Some requirements weren't met. Review the feedback and try again.
+    Some automated checks did not pass. Review the feedback above.
+
+    Common issues:
+    - Ensure file is named `techsupport_agent.py`
+    - Verify all required functions are implemented
+    - Check that contexts are properly defined
+    - Make sure recording is configured
+
+    You can push again to re-run the grader.

@@ -1,4 +1,4 @@
-name: Grade Submission
+name: Grade Practical Exam
 
 on:
   push:
@@ -13,13 +13,27 @@ permissions:
 
 jobs:
   grade:
+    # Skip if commit is from github-classroom[bot]
+    if: github.actor != 'github-classroom[bot]'
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Grade submission
+
+      - name: Grade practical exam
+        id: grade
         uses: signalwire-academy/swaig-grader@v1
         with:
-          solution-file: solution/agent.py
+          solution-file: solution/techsupport_agent.py
           grading-config: tests/grading.yaml
+          requires-manual-review: 'true'
+
+      - name: Notify progress tracker
+        if: always()
+        continue-on-error: true
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PROGRESS_TOKEN }}
+          repository: signalwire-academy/progress-tracker
+          event-type: grading-complete
+          client-payload: '{"repo": "${{ github.repository }}", "student": "${{ github.repository_owner }}", "assignment": "L2-practical", "result": "${{ steps.grade.outcome }}", "sha": "${{ github.sha }}"}'
