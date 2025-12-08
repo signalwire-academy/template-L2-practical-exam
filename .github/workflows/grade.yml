@@ -27,6 +27,7 @@ jobs:
           solution-file: solution/techsupport_agent.py
           grading-config: tests/grading.yaml
           requires-manual-review: 'true'
+          next-assignment: https://classroom.github.com/a/pW8dxCLE
 
       - name: Notify progress tracker
         if: always()
