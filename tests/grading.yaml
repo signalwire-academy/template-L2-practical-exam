@@ -134,6 +134,9 @@ feedback:
     - Live demonstration
 
     You will receive final results after manual review.
+
+    Ready for Level 3? Start Lab 3.1: Enterprise Architecture
+    https://classroom.github.com/a/pW8dxCLE
   fail: |
     Some automated checks did not pass. Review the feedback above.
 
