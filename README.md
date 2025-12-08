@@ -165,4 +165,10 @@ docker build -t techsupport:latest .
 
 ---
 
+## Next Assignment
+
+Congratulations on completing Level 2! Ready for Level 3? [**Start Lab 3.1: Enterprise Architecture**](https://classroom.github.com/a/pW8dxCLE)
+
+---
+
 *SignalWire AI Agents Certification - Level 2 Practical Exam*
