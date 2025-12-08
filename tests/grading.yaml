@@ -95,10 +95,14 @@ checks:
   - id: has_transfer
     name: "Has transfer capability for escalation"
     points: 5
-    type: swml_contains
+    type: exec
     file: solution/techsupport_agent.py
-    require:
-      - text: "transfer"
+    function: escalate_ticket
+    args:
+      specialist_type: "billing"
+    expect:
+      stdout_contains:
+        - "connect"
 
   # Part 5: Recording Compliance (10 points)
   - id: has_recording
